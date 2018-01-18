@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta http-equiv="Content-Type" content="text/html;
+charset=UTF-8">
+ <title>Inicio</title>
+ </head>
+ <body>
+ <h1>Inserta jugador: </h1>
+ <form id="form" onsubmit="return false;">
+  Nombre: <br>
+  <input type="text" name="nombre" id="nombre"><br>
+  Apellido: <br>
+  <input type="text" name="apellido" id="apellido">
+  Posicion: <br>
+  <input type="text" name="posicion" id="posicion">
+  Equipo: <br>
+  <input type="text" name="equipo" id="equipo">
+  <input type="submit" name="enviar" value="Enviar" onclick="othername();">
+  </form>
+     <script>
+         function othername() {
+    var jugadorobj = new Object();
+    jugadorobj.nombre=document.getElementById("nombre").value;
+    jugadorobj.apellidos=document.getElementById("apellido").value;
+    jugadorobj.posicion=document.getElementById("posicion").value;
+    jugadorobj.equipo=document.getElementById("equipo").value;
+             
+
+             
+             
+    jsonjugador = JSON.stringify(jugadorobj);             
+
+             
+    //xhr = new XMLHttpRequest();
+
+    
+    var json_upload = "json=" + jsonjugador;
+    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+    xmlhttp.open("POST", "/pruebasJSON/clientewebjsphp/js/listenPost.php");
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.onload = function() {     
+            alert (xmlhttp.status);
+            alert(xmlhttp.responseText);
+            
+    if (xmlhttp.status === 200 && xmlhttp.responseText !== jugadorobj) {
+        alert('Something went wrong.  Name is now ' + xmlhttp.responseText);
+        }
+    else if (xmlhttp.status !== 200) {
+        alert('Request failed.  Returned status of ' + xmlhttp.status);
+    }          
+        }
+             
+             
+             
+    xmlhttp.send(json_upload);
+         }
+/*             
+             
+    xhr.open('POST', '/pruebasJSON/clientewebjsphp/js/listenPost.php');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+    if (xhr.status === 200 && xhr.responseText !== jugadorobj) {
+        alert('Something went wrong.  Name is now ' + xhr.responseText);
+        }
+    else if (xhr.status !== 200) {
+        alert('Request failed.  Returned status of ' + xhr.status);
+    }
+    };
+    xhr.send(encodeURI( jugadorobj));
+         }
+     */
+     </script>
+     
+ </body>
+</html>

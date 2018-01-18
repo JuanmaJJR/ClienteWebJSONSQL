@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+
+        <h1>JUGADORES</h1>
+        <a href="anadirJugador.html">Añadir jugador</a>
+        <a href="borrarJugador.html">Borrar jugador</a>
+        <a href="borrarTodos.html">Borrar todos</a>
+        <a href="index.html">Actualizar</a>
+        <script language="javascript" type="text/javascript">
+
+        var myArr;
+        var arrayG;
+        var xmlhttp = new XMLHttpRequest();
+        var xmlhttp2 = new XMLHttpRequest();
+        var url = "js/leeEquipos.php";    
+        var url2 = "js/leeJugadores.php";
+        var i = 0;
+            
+        xmlhttp2.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        var documentJson2 = JSON.parse(this.responseText);
+        arrayG = documentJson2;
+        myFunction(arrayG["jugadores"],myArr["equipos"]);        
+        }
+        }
+
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        var documentJsons = JSON.parse(this.responseText);
+        myArr = documentJsons;
+        xmlhttp2.open("GET", url2, true);
+        xmlhttp2.send();
+        }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function myFunction(arrG,myArr) {
+            
+                var myTable= "<table border=1px><tr><td style='width: 100px; color: red;'>ID</td>";
+                myTable+= "<td style='width: 100px; color: red; text-align: right;'>NOMBRE</td>";
+                myTable+="<td style='width: 100px; color: red; text-align: right;'>APELLIDO</td>";
+                myTable+= "<td style='width: 100px; color: red; text-align: right;'>POSICION</td>";
+                myTable+= "<td style='width: 100px; color: red; text-align: right;'>EQUIPO</td></tr>";
+            
+            
+            
+                 for (var i=0; i<arrG.length; i++) {
+               // myArray[i] = myArray[i].toFixed(3);
+                myTable+="<td style='width: 100px; text-align: right;'>" + arrG[i].id + "</td>";
+                myTable+="<td style='width: 100px; text-align: right;'>" + arrG[i].nombre + "</td>";
+                myTable+="<td style='width: 100px; text-align: right;'>" + arrG[i].apellido + "</td>";
+                myTable+="<td style='width: 100px; text-align: right;'>" + arrG[i].posicion + "</td>";
+                    for (var z=0; z<myArr.length; z++) {
+                        if(arrG[i].equipo==myArr[z].id){
+                             myTable+="<td style='width: 100px; text-align: right;'>" + myArr[z].nombre + "</td></tr>";
+                        }
+                    }      
+                }  
+
+
+               myTable+="</table>";
+            
+             document.write( myTable);
+            document.write("<a href='añadirJugador.html'>Anadir jugador</a>");
+            document.write("</br>");
+            document.write("<a href='borrarJugador.html'>Borrar jugador</a>");
+                        document.write("</br>");
+
+            document.write("<a href='borrarTodos.html'>Borrar todos</a>");
+                        document.write("</br>");
+
+            document.write("<a href='index.html'>Actualizar</a>")
+
+
+
+        }
+
+
+            
+           
+            
+            //-->
+            </script> 
+        
+
+        
+
+
+        
+
+    </body>
+</html>
