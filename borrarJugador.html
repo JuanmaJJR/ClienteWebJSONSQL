@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Page Title</title>
+    </head>
+    <body>
+
+        <h1>Elimina un jugador</h1>
+        <script language="javascript" type="text/javascript">
+
+        var arrJugadores;
+        var xmlhttp = new XMLHttpRequest();
+        var url = "js/leeJugadores.php";
+        var i = 0;
+
+        xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        var documentJson = JSON.parse(this.responseText);
+        arrJugadores = documentJson;
+        myFunction(arrJugadores["jugadores"]);
+        }
+        }
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function myFunction(arrJugadores) {
+
+
+
+              document.write("<form id='form'><p> Seleccione un equipo</p>");
+              document.write("<select id='jugadores'>");
+              for(var i =0;i<arrJugadores.length;i++){
+                document.write("<option value='"+arrJugadores[i].id+"' >"+arrJugadores[i].nombre+" "+arrJugadores[i].apellido+"</option>");
+              }
+              document.write("</select>"+"</br>");
+                document.write("</br>");
+
+              document.write("<input type='submit' value='borrar' onclick='borrarJugador();'>");
+              document.write("</form>");
+            document.write("<a href='index.html'>Volver a Inicio</a>");
+
+        }
+
+
+        function borrarJugador(){
+
+            var idSelect ="id="+document.getElementById("jugadores").value;
+            //alert(idSelect);
+            xmlhttp.open("POST","/ClienteWeb/js/deletePost.php");
+            xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xmlhttp.send(idSelect);
+              alert("Jugador eliminado correctamente");
+
+        }
+            
+
+
+            </script>
+
+
+
+
+
+
+
+    </body>
+</html>

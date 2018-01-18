@@ -15,11 +15,62 @@ charset=UTF-8">
   Posicion: <br>
   <input type="text" name="posicion" id="posicion">
   Equipo: <br>
-  <input type="text" name="equipo" id="equipo">
-  <input type="submit" name="enviar" value="Enviar" onclick="othername();">
-  </form>
+     
+    <script>
+        
+        
+        var url2 = "js/leeEquipos.php"; 
+        var xmlhttp2 = new XMLHttpRequest();
+
+         
+        xmlhttp2.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        var documentJson2 = JSON.parse(this.responseText);
+        arrayG = documentJson2;
+        myFunction(arrayG["equipos"]);        
+        }
+        }
+         
+        xmlhttp2.open("GET", url2, true);
+        xmlhttp2.send();
+        
+        
+         //Funcion para ver los equipos de la BBDD
+         
+         function myFunction(arrayG){
+             document.write(" <h1>Inserta jugador: </h1>");
+        document.write(' <form id="form" onsubmit="return false;">');
+        document.write("  Nombre: <br>");
+        document.write('  <input type="text" name="nombre" id="nombre"><br>');
+        document.write("  Apellido: <br>");
+        document.write('  <input type="text" name="apellido" id="apellido"><br>');
+        document.write("  Posicion: <br>");
+        document.write('  <input type="text" name="posicion" id="posicion"><br>');
+        document.write("  Equipo: <br>");
+        document.write('<select id="equipo">');
+             for (var z=0; z<arrayG.length; z++) {
+                   
+                    document.write("<option value='"+arrayG[z].id+"'>"+arrayG[z].nombre+"");
+                }   
+            document.write("</select>")
+             document.write('<input type="submit" name="enviar" value="Enviar" onclick="othername();">');
+         }
+     </script>
+  
      <script>
-         function othername() {
+         
+       
+         
+         
+         
+         
+         
+         
+         
+         
+         //Funcion insert
+         
+    function othername() {
     var jugadorobj = new Object();
     jugadorobj.nombre=document.getElementById("nombre").value;
     jugadorobj.apellidos=document.getElementById("apellido").value;
@@ -40,14 +91,14 @@ charset=UTF-8">
     xmlhttp.open("POST", "/pruebasJSON/clientewebjsphp/js/listenPost.php");
     xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.onload = function() {     
-            alert (xmlhttp.status);
-            alert(xmlhttp.responseText);
+          //  alert (xmlhttp.status);
+        //    alert(xmlhttp.responseText);
             
     if (xmlhttp.status === 200 && xmlhttp.responseText !== jugadorobj) {
-        alert('Something went wrong.  Name is now ' + xmlhttp.responseText);
+        //alert('Something went wrong.  Name is now ' + xmlhttp.responseText);
         }
     else if (xmlhttp.status !== 200) {
-        alert('Request failed.  Returned status of ' + xmlhttp.status);
+        //alert('Request failed.  Returned status of ' + xmlhttp.status);
     } 
             else{
                 
@@ -58,6 +109,7 @@ charset=UTF-8">
              
     xmlhttp.send(json_upload);
     alert("Jugador insertado correctamente");
+    document.write("</br>");
     document.write("<a href='index.html'>Volver al inicio</a>")
          }
 /*             

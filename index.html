@@ -41,7 +41,7 @@
 
         function myFunction(arrG,myArr) {
             
-                var myTable= "<table border=1px><tr><td style='width: 100px; color: red;'>ID</td>";
+                var myTable= "<table border=1px id='tablita'><tr><td style='width: 100px; color: red;'>ID</td>";
                 myTable+= "<td style='width: 100px; color: red; text-align: right;'>NOMBRE</td>";
                 myTable+="<td style='width: 100px; color: red; text-align: right;'>APELLIDO</td>";
                 myTable+= "<td style='width: 100px; color: red; text-align: right;'>POSICION</td>";
@@ -70,14 +70,25 @@
             document.write("</br>");
             document.write("<a href='borrarJugador.html'>Borrar jugador</a>");
                         document.write("</br>");
-
-            document.write("<a href='borrarTodos.html'>Borrar todos</a>");
-                        document.write("</br>");
-
+            document.write('<button onclick="borrarTodos()">BORRAR TODOS</button>');
+            document.write("</br>");
             document.write("<a href='index.html'>Actualizar</a>");
-
-
-
+        }
+        function borrarTodos(){
+                var xhr = new XMLHttpRequest();
+ 
+            xhr.open("GET","/pruebasJSON/clientewebjsphp/js/deleteAll.php",true);
+            xhr.send();
+ 
+        xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4 && xhr.status == 200){
+            alert(xhr.responseText);
+            }
+        }
+        var list = document.getElementById("tablita"); 
+            for(var i = 0; i<list.childNodes.childNodes.length;i++){
+                list.removeChild(list.childNodes[0].childNodes[i]); 
+        }
         }
 
 
