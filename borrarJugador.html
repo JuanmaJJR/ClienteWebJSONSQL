@@ -46,7 +46,7 @@
 
             var idSelect ="id="+document.getElementById("jugadores").value;
             //alert(idSelect);
-            xmlhttp.open("POST","/ClienteWeb/js/deletePost.php");
+            xmlhttp.open("POST","/ClienteWebJSONSQL-master/js/deletePost.php");
             xmlhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
             xmlhttp.send(idSelect);
               alert("Jugador eliminado correctamente");
